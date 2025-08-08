@@ -1,0 +1,55 @@
+services:
+  - type: web
+    name: leadbot-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: CRYPTO_FERNET_KEY
+        generateValue: true
+      - key: ENABLE_COMPUTRABAJO
+        value: "true"
+      - key: ENABLE_LINKEDIN
+        value: "false"
+    healthCheckPath: /health
+  - type: worker
+    name: leadbot-celery-worker
+    env: docker
+    dockerCommand: celery -A app.worker.celery worker --loglevel=INFO
+    autoDeploy: true
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: CRYPTO_FERNET_KEY
+        generateValue: true
+      - key: ENABLE_COMPUTRABAJO
+        value: "true"
+      - key: ENABLE_LINKEDIN
+        value: "false"
+    dependsOn:
+      - leadbot-redis
+  - type: worker
+    name: leadbot-celery-beat
+    env: docker
+    dockerCommand: celery -A app.worker.celery beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
+    autoDeploy: true
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: CRYPTO_FERNET_KEY
+        generateValue: true
+      - key: ENABLE_COMPUTRABAJO
+        value: "true"
+      - key: ENABLE_LINKEDIN
+        value: "false"
+    dependsOn:
+      - leadbot-redis
+  - type: redis
+    name: leadbot-redis
+    ipAllowList: []
+    plan: free

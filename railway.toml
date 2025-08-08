@@ -1,0 +1,12 @@
+[project]
+name = "leadbot-saas"
+
+[environments.production]
+[environments.production.variables]
+APP_ENV = "prod"
+ENABLE_COMPUTRABAJO = "true"
+ENABLE_LINKEDIN = "false"
+# CRYPTO_FERNET_KEY will need to be added manually or via CLI
+
+[plugins]
+# Add Redis plugin in Railway dashboard and set REDIS_URL / broker URLs accordingly
