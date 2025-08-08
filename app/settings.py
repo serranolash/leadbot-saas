@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     APP_NAME: str = "LeadBot Sheet SaaS"
     APP_ENV: str = "dev"
     SECRET_KEY: str = "change_me"
-    CRYPTO_FERNET_KEY: str = "REPLACE_WITH_FERNET_KEY"
+    CRYPTO_FERNET_KEY: str = "QniwY3P8Lu1TipE5x5lEyeGL55Pg4QT9gpwyll807Is="
 
     DATABASE_URL: str = "sqlite:///./leadbot.db"
 
