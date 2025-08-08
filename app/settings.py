@@ -1,5 +1,7 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field
 from typing import Optional
+
 
 class Settings(BaseSettings):
     APP_NAME: str = "LeadBot Sheet SaaS"
@@ -19,18 +21,24 @@ class Settings(BaseSettings):
     ENABLE_COMPUTRABAJO: bool = True
 
     # Celery Beat simple demo
-    DEMO_QUERY: Optional[str] = None             # e.g. "java backend 5 años ecommerce"
+    DEMO_QUERY: Optional[str] = None  # e.g. "java backend 5 años ecommerce"
     DEMO_TARGET: int = 10
     DEMO_MIN_SCORE: int = 6
     DEMO_MIN_GROUPS: int = 2
     DEMO_MIN_YEARS: int = 0
-    # JSON plano con credenciales mínimas para demo (se aceptan solo para demo/local):
+    # JSON plano con credenciales mínimas para demo/local:
     # {"linkedin": {"user":"...", "pass":"...", "chrome_profile": "...", "chrome_binary": "..."},
     #  "computrabajo": {}}
     DEMO_CREDS_JSON: Optional[str] = None
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    # Configuración para Pydantic v2
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,
+        extra="ignore"
+    )
+
 
 settings = Settings()
+
