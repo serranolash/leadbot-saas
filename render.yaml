@@ -3,9 +3,9 @@ services:
     name: leadbot-saas
     env: docker
     dockerfilePath: ./Dockerfile
-    autoDeploy: true
     plan: free
-    healthCheckPath: /health   # o "/" si no tenés /health
+    autoDeploy: true
+    healthCheckPath: /
     envVars:
       - key: APP_ENV
         value: prod
@@ -16,58 +16,9 @@ services:
       - key: ENABLE_LINKEDIN
         value: "false"
       - key: REDIS_URL
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+        value: "redis://:<PASS>@<HOST>:<PORT>"   # URL de Upstash Redis
       - key: CELERY_BROKER_URL
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+        value: "redis://:<PASS>@<HOST>:<PORT>"
       - key: CELERY_RESULT_BACKEND
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-
-  - type: worker
-    name: leadbot-celery-worker
-    env: docker
-    dockerCommand: celery -A app.worker.celery worker --loglevel=INFO
-    autoDeploy: true
-    plan: free
-    envVars:
-      - key: APP_ENV
-        value: prod
-      - key: CRYPTO_FERNET_KEY
-        generateValue: true
-      - key: ENABLE_COMPUTRABAJO
-        value: "true"
-      - key: ENABLE_LINKEDIN
-        value: "false"
-      - key: REDIS_URL
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-      - key: CELERY_BROKER_URL
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-      - key: CELERY_RESULT_BACKEND
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-
-  - type: worker
-    name: leadbot-celery-beat
-    env: docker
-    dockerCommand: celery -A app.worker.celery beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
-    autoDeploy: true
-    plan: free
-    envVars:
-      - key: APP_ENV
-        value: prod
-      - key: CRYPTO_FERNET_KEY
-        generateValue: true
-      - key: ENABLE_COMPUTRABAJO
-        value: "true"
-      - key: ENABLE_LINKEDIN
-        value: "false"
-      - key: REDIS_URL
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-      - key: CELERY_BROKER_URL
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-      - key: CELERY_RESULT_BACKEND
-        fromService: { name: leadbot-redis, type: redis, property: connectionString }
-
-  - type: redis
-    name: leadbot-redis
-    plan: free
-    ipAllowList: []
+        value: "redis://:<PASS>@<HOST>:<PORT>"
 
