@@ -1,10 +1,11 @@
 services:
   - type: web
-    name: leadbot-api
+    name: leadbot-saas
     env: docker
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     plan: free
+    healthCheckPath: /health
     envVars:
       - key: APP_ENV
         value: prod
@@ -14,11 +15,16 @@ services:
         value: "true"
       - key: ENABLE_LINKEDIN
         value: "false"
-    healthCheckPath: /health
+      - key: REDIS_URL
+        fromService:
+          name: leadbot-redis
+          type: redis
+          property: connectionString
+
   - type: worker
     name: leadbot-celery-worker
     env: docker
-    dockerCommand: celery -A app.worker.celery worker --loglevel=INFO
+    dockerCommand: app.worker.celery worker --loglevel=INFO
     autoDeploy: true
     plan: free
     envVars:
@@ -30,12 +36,16 @@ services:
         value: "true"
       - key: ENABLE_LINKEDIN
         value: "false"
-    dependsOn:
-      - leadbot-redis
+      - key: REDIS_URL
+        fromService:
+          name: leadbot-redis
+          type: redis
+          property: connectionString
+
   - type: worker
     name: leadbot-celery-beat
     env: docker
-    dockerCommand: celery -A app.worker.celery beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
+    dockerCommand: app.worker.celery beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
     autoDeploy: true
     plan: free
     envVars:
@@ -47,9 +57,13 @@ services:
         value: "true"
       - key: ENABLE_LINKEDIN
         value: "false"
-    dependsOn:
-      - leadbot-redis
+      - key: REDIS_URL
+        fromService:
+          name: leadbot-redis
+          type: redis
+          property: connectionString
+
   - type: redis
     name: leadbot-redis
-    ipAllowList: []
     plan: free
+    ipAllowList: []
