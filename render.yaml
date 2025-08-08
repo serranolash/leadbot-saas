@@ -5,7 +5,7 @@ services:
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     plan: free
-    healthCheckPath: /health
+    healthCheckPath: /health   # o "/" si no tenés /health
     envVars:
       - key: APP_ENV
         value: prod
@@ -16,15 +16,16 @@ services:
       - key: ENABLE_LINKEDIN
         value: "false"
       - key: REDIS_URL
-        fromService:
-          name: leadbot-redis
-          type: redis
-          property: connectionString
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+      - key: CELERY_BROKER_URL
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+      - key: CELERY_RESULT_BACKEND
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
 
   - type: worker
     name: leadbot-celery-worker
     env: docker
-    dockerCommand: app.worker.celery worker --loglevel=INFO
+    dockerCommand: celery -A app.worker.celery worker --loglevel=INFO
     autoDeploy: true
     plan: free
     envVars:
@@ -37,15 +38,16 @@ services:
       - key: ENABLE_LINKEDIN
         value: "false"
       - key: REDIS_URL
-        fromService:
-          name: leadbot-redis
-          type: redis
-          property: connectionString
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+      - key: CELERY_BROKER_URL
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+      - key: CELERY_RESULT_BACKEND
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
 
   - type: worker
     name: leadbot-celery-beat
     env: docker
-    dockerCommand: app.worker.celery beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
+    dockerCommand: celery -A app.worker.celery beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
     autoDeploy: true
     plan: free
     envVars:
@@ -58,12 +60,14 @@ services:
       - key: ENABLE_LINKEDIN
         value: "false"
       - key: REDIS_URL
-        fromService:
-          name: leadbot-redis
-          type: redis
-          property: connectionString
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+      - key: CELERY_BROKER_URL
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
+      - key: CELERY_RESULT_BACKEND
+        fromService: { name: leadbot-redis, type: redis, property: connectionString }
 
   - type: redis
     name: leadbot-redis
     plan: free
     ipAllowList: []
+
