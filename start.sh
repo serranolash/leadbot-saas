@@ -1,3 +1,13 @@
+echo "REDIS_URL=${REDIS_URL%%@*}@***"
+echo "CELERY_BROKER_URL=${CELERY_BROKER_URL%%@*}@***"
+echo "CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND%%@*}@***"
+
+if echo "$REDIS_URL$CELERY_BROKER_URL$CELERY_RESULT_BACKEND" | grep -qE '<PORT>|<HOST>|<PASS>'; then
+  echo "❌ Variables Redis inválidas (contienen placeholders). Abortando." >&2
+  exit 1
+fi
+
+
 #!/usr/bin/env bash
 set -e
 
