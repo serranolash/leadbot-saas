@@ -18,6 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Dar permisos de ejecución al script de arranque
+RUN sed -i 's/\r$//' start.sh
 RUN chmod +x start.sh
 
 # Puerto para Render
