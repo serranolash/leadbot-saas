@@ -11,3 +11,4 @@ openpyxl==3.1.5
 selenium==4.23.1
 webdriver-manager==4.0.2
 python-dotenv==1.0.1
+pydantic-settings>=2.2
