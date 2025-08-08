@@ -18,8 +18,9 @@ services:
 
       # Pega aquí la URL REAL de Upstash Redis (usa la misma en las 3)
       - key: REDIS_URL
-        value: "redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379/0"
+        value: "rediss://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379/0"
       - key: CELERY_BROKER_URL
-        value: "redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379/0"
+        value: "rediss://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379/0"
       - key: CELERY_RESULT_BACKEND
-        value: "redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379/1"
+        value: "rediss://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379/1"
+
