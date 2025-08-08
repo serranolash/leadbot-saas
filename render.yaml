@@ -18,8 +18,8 @@ services:
 
       # Pega aquí la URL REAL de Upstash Redis (usa la misma en las 3)
       - key: REDIS_URL
-        value: "redis-cli --tls -u redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379"
+        value: "redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379"
       - key: CELERY_BROKER_URL
-        value: "redis-cli --tls -u redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379"
+        value: "redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379"
       - key: CELERY_RESULT_BACKEND
-        value: "redis-cli --tls -u redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379"
+        value: "redis://default:Aan1AAIjcDFjZmJkNGFhN2NlMDI0YzNlODRiYjRlMTMyMDE4Mjk4N3AxMA@arriving-monitor-43509.upstash.io:6379"
