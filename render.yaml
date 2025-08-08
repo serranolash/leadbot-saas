@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: leadbot-saas
+    name: leadbot-api
     env: docker
     dockerfilePath: ./Dockerfile
     plan: free
@@ -16,9 +16,8 @@ services:
       - key: ENABLE_LINKEDIN
         value: "false"
       - key: REDIS_URL
-        value: "redis://:<PASS>@<HOST>:<PORT>"   # URL de Upstash Redis
+        value: "rediss://:p0_xxx@<host>:<port>/0"
       - key: CELERY_BROKER_URL
-        value: "redis://:<PASS>@<HOST>:<PORT>"
+        value: "rediss://:p0_xxx@<host>:<port>/0"
       - key: CELERY_RESULT_BACKEND
-        value: "redis://:<PASS>@<HOST>:<PORT>"
-
+        value: "rediss://:p0_xxx@<host>:<port>/1"
